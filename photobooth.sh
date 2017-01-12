@@ -32,7 +32,7 @@ exec > file 2>&1
 ## Show a default 'boot splash image'
 ##
 
-$PBDIR/showjpg $PBDIR/bluetongue.x720.JPG
+$PB_DIR/showjpg $PB_DIR/photobooth.jpg
 
 
 ##
