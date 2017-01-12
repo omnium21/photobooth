@@ -1,0 +1,10 @@
+#!/bin/sh
+
+export LANG=c
+
+PB_DIR=/home/pi/photobooth/
+
+LOGS_DIR=$PB_DIR/logs/
+
+cat /dev/zero > /dev/fb0 2>/dev/null;
+/usr/local/bin/fbv -quickfe $* 2>&1 >> $LOGS_DIR/fbv.log
