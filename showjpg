@@ -2,9 +2,14 @@
 
 export LANG=c
 
-PB_DIR=/home/pi/photobooth/
+image=$1
+LOGS_DIR=$2
 
-LOGS_DIR=$PB_DIR/logs/
+if [ "$LOGS_DIR" != "" ] && [ -d $LOGS_DIR ]]; then
+	log=$LOGS_DIR/fbv.log
+else
+	log=/dev/null
+fi
 
 cat /dev/zero > /dev/fb0 2>/dev/null;
-/usr/local/bin/fbv -quickfe $* 2>&1 >> $LOGS_DIR/fbv.log
+/usr/local/bin/fbv -quickfe $image 2>&1 >> $log
