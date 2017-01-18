@@ -7,7 +7,7 @@ export LANG=C
 ## PB_DIR Should be the location of the install
 ## We could take this from $0
 ##
-PB_DIR=/home/pi/photobooth/
+PB_DIR=$( cd "$( dirname "$0" )" && pwd )
 
 OUTPUT_DIR=$PB_DIR/Photos/
 LOGS_DIR=$PB_DIR/logs/
