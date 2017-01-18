@@ -9,8 +9,9 @@ export LANG=C
 ##
 PB_DIR=$( cd "$( dirname "$0" )" && pwd )
 
-PHOTOS_DIR=$PB_DIR/Photos/
-LOGS_DIR=$PB_DIR/logs/
+DATA_DIR=/home/$USER/pbdata
+PHOTOS_DIR=$DATA_DIR/photos
+LOGS_DIR=$DATA_DIR/logs
 
 mkdir -p $PHOTOS_DIR $LOGS_DIR
 
