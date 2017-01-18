@@ -19,7 +19,12 @@ mkdir -p $PHOTOS_DIR $LOGS_DIR
 ## Disable the cursor so it doesn't interfere with the screen
 ##
 
-setterm -cursor off > /dev/tty1
+tty=/dev/tty1
+if [ -w $tty ]; then
+  setterm -cursor off > $tty
+else
+  echo "WARNING: $tty is read only. Allow user \"$USER\" access so we can disable to cursor on the screen"
+fi
 
 ##
 ## Catch any extra output to prevent output on our console screen
