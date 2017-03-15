@@ -31,7 +31,7 @@ gthumb -f final.png &
 ##
 
 iwatch -e moved_to \
-	-c "$PB_DIR/showjpg %f $LOGS_DIR" \
+	-c "ln -sf %f final.png" \
 	$PHOTOS_DIR 2>&1 >> $LOGS_DIR/iwatch.log &
 
 ##
