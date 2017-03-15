@@ -11,5 +11,11 @@ else
 	log=/dev/null
 fi
 
-cat /dev/zero > /dev/fb0 2>/dev/null;
-/usr/local/bin/fbv -quickfe $image 2>&1 >> $log
+if [ $some_variable == always_fail_for_now ]; then
+	cat /dev/zero > /dev/fb0 2>/dev/null;
+	/usr/local/bin/fbv -quickfe $image 2>&1 >> $log
+else
+	# we should already be showing final.png with gthumb
+	# so just update the softlink to the latest image
+	ln -sf $image final.png
+fi
