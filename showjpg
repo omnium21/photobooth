@@ -16,6 +16,8 @@ if [ $some_variable == always_fail_for_now ]; then
 	/usr/local/bin/fbv -quickfe $image 2>&1 >> $log
 else
 	# we should already be showing final.png with gthumb
-	# so just update the softlink to the latest image
-	ln -sf $image final.png
+	FZ=45
+	COL=\#00ff00
+	convert ${image} -write mpr:AB +delete -respect-parentheses \( mpr:AB -fuzz ${FZ}% -transparent ${COL} +write mpr:CD \) \( background.jpg mpr:CD -gravity center -composite +write final.png \) \)
+
 fi
