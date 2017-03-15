@@ -19,7 +19,7 @@ mkdir -p $PHOTOS_DIR $LOGS_DIR
 ## Show a default 'boot splash image'
 ##
 cd $PHOTOS_DIR
-ln -s $PB_DIR/photobooth.jpg final.png
+ln -sf $PB_DIR/photobooth.jpg final.png
 gthumb -f final.png &
 
 
