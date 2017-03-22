@@ -15,9 +15,15 @@ if [ -e "x$some_variable" ]; then
 	cat /dev/zero > /dev/fb0 2>/dev/null;
 	/usr/local/bin/fbv -quickfe $image 2>&1 >> $log
 else
-	# we should already be showing final.png with gthumb
-	FZ=45
-	COL=\#00ff00
-	convert ${image} -write mpr:AB +delete -respect-parentheses \( mpr:AB -fuzz ${FZ}% -transparent ${COL} +write mpr:CD \) \( background.jpg mpr:CD -gravity center -composite +write ${image}.out.png \) \)
-	ln -sf ${image}.out.png final.png
+	# perhaps we want to cycle through different backgrounds?
+	background=background.jpg
+	if [ -e $background ]; then
+		# we should already be showing final.png with gthumb
+		FZ=45
+		COL=\#00ff00
+		convert ${image} -write mpr:AB +delete -respect-parentheses \( mpr:AB -fuzz ${FZ}% -transparent ${COL} +write mpr:CD \) \( background.jpg mpr:CD -gravity center -composite +write ${image}.out.png \) \)
+		ln -sf ${image}.out.png final.png
+	else
+		ln -sf ${image} final.png
+	fi
 fi
