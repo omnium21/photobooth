@@ -20,8 +20,11 @@ mkdir -p $PHOTOS_DIR $LOGS_DIR
 ##
 cd $PHOTOS_DIR
 cp $PB_DIR/photobooth.jpg final.png
-gthumb -f final.png &
-
+if [ -e "x$some_variable" ]; then
+	$PB_DIR/showjpg $PB_DIR/photobooth.jpg $LOGS_DIR
+else
+	gthumb -f final.png &
+fi
 
 ##
 ## iwatch (from inotify) monitors $PHOTOS_DIR and
