@@ -22,8 +22,10 @@ else
 		FZ=45
 		COL=\#00ff00
 		convert ${image} -write mpr:AB +delete -respect-parentheses \( mpr:AB -fuzz ${FZ}% -transparent ${COL} +write mpr:CD \) \( background.jpg mpr:CD -gravity center -composite +write ${image}.out.png \) \)
-		ln -sf ${image}.out.png final.png
+
+		# gThumg needs to be configured to enable Preferences->"Reuse the active window to open files"
+		gthumb -f ${image}.out.png &
 	else
-		ln -sf ${image} final.png
+		gthumb -f ${image} &
 	fi
 fi
