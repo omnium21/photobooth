@@ -32,11 +32,10 @@ mkdir -p $PHOTOS_DIR $LOGS_DIR
 ## Show a default 'boot splash image'
 ##
 cd $PHOTOS_DIR
-cp $PB_DIR/photobooth.jpg final.png
 if [ -e "x$some_variable" ]; then
 	$PB_DIR/showjpg $PB_DIR/photobooth.jpg $LOGS_DIR
 else
-	gthumb -f final.png &
+	gthumb -f photobooth.jpg &
 	PID_GTHUMB=$!
 fi
 
