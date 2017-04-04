@@ -24,8 +24,8 @@ else
 		convert ${image} -write mpr:AB +delete -respect-parentheses \( mpr:AB -fuzz ${FZ}% -transparent ${COL} +write mpr:CD \) \( background.jpg mpr:CD -gravity center -composite +write ${image}.out.png \) \)
 
 		# gThumg needs to be configured to enable Preferences->"Reuse the active window to open files"
-		gthumb -f ${image}.out.png &
+		gthumb ${image}.out.png &
 	else
-		gthumb -f ${image} &
+		gthumb ${image} &
 	fi
 fi
