@@ -35,7 +35,7 @@ cd $PHOTOS_DIR
 if [ -e "x$some_variable" ]; then
 	$PB_DIR/showjpg $PB_DIR/photobooth.jpg $LOGS_DIR
 else
-	gthumb -f photobooth.jpg &
+	gthumb -f $PB_DIR/photobooth.jpg &
 	PID_GTHUMB=$!
 fi
 
