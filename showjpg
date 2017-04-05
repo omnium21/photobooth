@@ -12,5 +12,28 @@ else
 	log=/dev/null
 fi
 
+out=${image}
+# if ImageMagick's convert is installed, use it
+if [ ! -z `command -v convert` ]; then
+	background=background.jpg
+	if [ -e $background ]; then
+		bg_cmd="\\( mpr:img -fuzz 45% -transparent \#00ff00 +write mpr:img \\) \
+			\\( ${background} mpr:img -gravity center -composite +write mpr:img \\)"
+	fi
+	logo=logo.png
+	if [ -e $logo ]; then
+		logo_cmd="\\( mpr:img $logo -gravity southeast -composite +write mpr:img \\)"
+	fi
+	if [ "$bg_cmd" != "" ] || [ "$logo_cmd" != "" ]; then
+		out=${image}.out.jpg
+		cmd="convert ${image} -write mpr:img +delete \
+			$bg_cmd \
+			$logo_cmd \
+			\( mpr:img +write ${out} \) \
+			NULL:"
+		eval $cmd
+	fi
+fi
+
 cat /dev/zero > /dev/fb0 2>/dev/null;
-/usr/local/bin/fbv -quickfe $image 2>&1 >> $log
+/usr/local/bin/fbv -quickfe $out 2>&1 >> $log
