@@ -36,7 +36,7 @@ if [ ! -z `command -v convert` ]; then
 fi
 
 # if fbv is installed, use it
-if [ ! -z `command -v fbv` ]; then
+if [ -e /usr/local/bin/fbv ]; then
 	cat /dev/zero > /dev/fb0 2>/dev/null;
 	/usr/local/bin/fbv -quickfe $out 2>&1 >> $log
 else

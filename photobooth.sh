@@ -32,7 +32,7 @@ mkdir -p $PHOTOS_DIR $LOGS_DIR
 ## Show a default 'boot splash image'
 ##
 cd $PHOTOS_DIR
-if [ ! -z `command -v fbv` ]; then
+if [ -e /usr/local/bin/fbv ]; then
 	$PB_DIR/showjpg $PB_DIR/photobooth.jpg $LOGS_DIR
 else
 	killall gthumb
