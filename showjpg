@@ -18,22 +18,24 @@ else
 	# perhaps we want to cycle through different backgrounds?
 	background=background.jpg
 	logo=logo.png
+	out=${image}
 	if [ -e $background ]; then
-		bg_cmd_1="\\( mpr:img -fuzz 45% -transparent \#00ff00 +write mpr:img \\)"
-		bg_cmd_2="\\( ${background} mpr:img -gravity center -composite +write mpr:img \\)"
+		bg_cmd="\\( mpr:img -fuzz 45% -transparent \#00ff00 +write mpr:img \\) \
+			\\( ${background} mpr:img -gravity center -composite +write mpr:img \\)"
 	fi
 	if [ -e $logo ]; then
 		logo_cmd="\\( mpr:img $logo -gravity southeast -composite +write mpr:img \\)"
 	fi
-	cmd="convert ${image} -write mpr:img +delete \
-		-respect-parentheses \
-		$bg_cmd_1 \
-		$bg_cmd_2 \
-		$logo_cmd \
-		\( mpr:img +write ${image}.out.jpg \) \
-		\)"
-	eval $cmd
-
+	if [ "$bg_cmd" != "" ] || [ "$logo_cmd" != "" ]; then
+		out=${image}.out.jpg
+		cmd="convert ${image} -write mpr:img +delete \
+			-respect-parentheses \
+			$bg_cmd \
+			$logo_cmd \
+			\( mpr:img +write ${out} \) \
+			\)"
+		eval $cmd
+	fi
 	# gThumg needs to be configured to enable Preferences->"Reuse the active window to open files"
-	gthumb ${image}.out.jpg &
+	gthumb ${out} &
 fi
