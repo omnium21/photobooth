@@ -12,6 +12,7 @@ ctrl_c() {
 		kill $PID_IWATCH
 	fi
 	if [ "$PID_GTHUMB" != "" ]; then
+		echo "killing gthumb..."
 		kill $PID_GTHUMB
 	fi
 	exit 0
@@ -53,7 +54,7 @@ if [ -e /usr/local/bin/fbv ]; then
 
 	$PB_DIR/showjpg $PB_DIR/photobooth.jpg $LOGS_DIR
 else
-	killall gthumb
+	killall gthumb 2> /dev/null
 	gthumb -f $PB_DIR/photobooth.jpg &
 	PID_GTHUMB=$!
 fi
