@@ -12,7 +12,8 @@ else
 fi
 
 out=${image}
-if [ -e "/usr/bin/convert" ]; then
+# if ImageMagick's convert is installed, use it
+if [ ! -z `command -v convert` ]; then
 	# perhaps we want to cycle through different backgrounds?
 	background=background.jpg
 	logo=logo.png
@@ -33,10 +34,11 @@ if [ -e "/usr/bin/convert" ]; then
 		eval $cmd
 	fi
 fi
-fbv=/usr/local/bin/fbv
-if [ -e "$fbv" ]; then
+
+# if fbv is installed, use it
+if [ ! -z `command -v fbv` ]; then
 	cat /dev/zero > /dev/fb0 2>/dev/null;
-	$fbv -quickfe $out 2>&1 >> $log
+	/usr/local/bin/fbv -quickfe $out 2>&1 >> $log
 else
 	# gThumg needs to be configured to enable Preferences->"Reuse the active window to open files"
 	gthumb ${out} &
