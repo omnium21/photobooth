@@ -11,6 +11,10 @@ ctrl_c() {
 	if [ "$PID_IWATCH" != "" ]; then
 		kill $PID_IWATCH
 	fi
+	if [ "$PID_GTHUMB" != "" ]; then
+		echo "killing gthumb..."
+		kill $PID_GTHUMB
+	fi
 	exit 0
 }
 ##
@@ -26,30 +30,34 @@ LOGS_DIR=$DATA_DIR/logs
 mkdir -p $PHOTOS_DIR $LOGS_DIR
 
 ##
-## Disable the cursor so it doesn't interfere with the screen
-##
-
-tty=/dev/tty1
-if [ -w $tty ]; then
-  setterm -cursor off > $tty
-else
-  echo "WARNING: $tty is read only. Allow user \"$USER\" access so we can disable to cursor on the screen"
-fi
-
-##
-## Catch any extra output to prevent output on our console screen
-## (our Image viewer)
-##
-
-exec > file 2>&1
-
-
-##
 ## Show a default 'boot splash image'
 ##
+cd $PHOTOS_DIR
+if [ -e /usr/local/bin/fbv ]; then
+	##
+	## Disable the cursor so it doesn't interfere with the screen
+	##
 
-$PB_DIR/showjpg $PB_DIR/photobooth.jpg $DATA_DIR
+	tty=/dev/tty1
+	if [ -w $tty ]; then
+	  setterm -cursor off > $tty
+	else
+	  echo "WARNING: $tty is read only. Allow user \"$USER\" access so we can disable to cursor on the screen"
+	fi
 
+	##
+	## Catch any extra output to prevent output on our console screen
+	## (our Image viewer)
+	##
+
+	exec > file 2>&1
+
+	$PB_DIR/showjpg $PB_DIR/photobooth.jpg $DATA_DIR
+else
+	killall gthumb 2> /dev/null
+	gthumb -f $PB_DIR/photobooth.jpg &
+	PID_GTHUMB=$!
+fi
 
 ##
 ## iwatch (from inotify) monitors $PHOTOS_DIR and
@@ -76,4 +84,3 @@ do
 	yes | gphoto2 --wait-event-and-download 2>&1 >> $LOGS_DIR/photobooth.log;
 	sleep 1;
 done 2>&1 > /dev/null
-
