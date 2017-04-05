@@ -11,14 +11,11 @@ else
 	log=/dev/null
 fi
 
-if [ -e "x$some_variable" ]; then
-	cat /dev/zero > /dev/fb0 2>/dev/null;
-	/usr/local/bin/fbv -quickfe $image 2>&1 >> $log
-else
+out=${image}
+if [ -e "/usr/bin/convert" ]; then
 	# perhaps we want to cycle through different backgrounds?
 	background=background.jpg
 	logo=logo.png
-	out=${image}
 	if [ -e $background ]; then
 		bg_cmd="\\( mpr:img -fuzz 45% -transparent \#00ff00 +write mpr:img \\) \
 			\\( ${background} mpr:img -gravity center -composite +write mpr:img \\)"
@@ -35,6 +32,12 @@ else
 			NULL:"
 		eval $cmd
 	fi
+fi
+fbv=/usr/local/bin/fbv
+if [ -e "$fbv" ]; then
+	cat /dev/zero > /dev/fb0 2>/dev/null;
+	$fbv -quickfe $out 2>&1 >> $log
+else
 	# gThumg needs to be configured to enable Preferences->"Reuse the active window to open files"
 	gthumb ${out} &
 fi
