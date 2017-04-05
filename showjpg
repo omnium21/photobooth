@@ -29,11 +29,10 @@ else
 	if [ "$bg_cmd" != "" ] || [ "$logo_cmd" != "" ]; then
 		out=${image}.out.jpg
 		cmd="convert ${image} -write mpr:img +delete \
-			-respect-parentheses \
 			$bg_cmd \
 			$logo_cmd \
 			\( mpr:img +write ${out} \) \
-			\)"
+			NULL:"
 		eval $cmd
 	fi
 	# gThumg needs to be configured to enable Preferences->"Reuse the active window to open files"
