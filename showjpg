@@ -17,15 +17,23 @@ if [ -e "x$some_variable" ]; then
 else
 	# perhaps we want to cycle through different backgrounds?
 	background=background.jpg
+	logo=logo.png
 	if [ -e $background ]; then
-		# we should already be showing final.png with gthumb
-		FZ=45
-		COL=\#00ff00
-		convert ${image} -write mpr:AB +delete -respect-parentheses \( mpr:AB -fuzz ${FZ}% -transparent ${COL} +write mpr:CD \) \( background.jpg mpr:CD -gravity center -composite +write ${image}.out.png \) \)
-
-		# gThumg needs to be configured to enable Preferences->"Reuse the active window to open files"
-		gthumb ${image}.out.png &
-	else
-		gthumb ${image} &
+		bg_cmd_1="\\( mpr:img -fuzz 45% -transparent \#00ff00 +write mpr:img \\)"
+		bg_cmd_2="\\( ${background} mpr:img -gravity center -composite +write mpr:img \\)"
 	fi
+	if [ -e $logo ]; then
+		logo_cmd="\\( mpr:img $logo -gravity southeast -composite +write mpr:img \\)"
+	fi
+	cmd="convert ${image} -write mpr:img +delete \
+		-respect-parentheses \
+		$bg_cmd_1 \
+		$bg_cmd_2 \
+		$logo_cmd \
+		\( mpr:img +write ${image}.out.jpg \) \
+		\)"
+	eval $cmd
+
+	# gThumg needs to be configured to enable Preferences->"Reuse the active window to open files"
+	gthumb ${image}.out.jpg &
 fi
