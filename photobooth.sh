@@ -52,7 +52,7 @@ if [ -e /usr/local/bin/fbv ]; then
 
 	exec > file 2>&1
 
-	$PB_DIR/showjpg $PB_DIR/photobooth.jpg $LOGS_DIR
+	$PB_DIR/showjpg $PB_DIR/photobooth.jpg $DATA_DIR
 else
 	killall gthumb 2> /dev/null
 	gthumb -f $PB_DIR/photobooth.jpg &

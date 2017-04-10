@@ -3,7 +3,8 @@
 export LANG=c
 
 image=$1
-LOGS_DIR=$2
+DATA_DIR=$2
+LOGS_DIR=$DATA_DIR/logs
 
 if [ "$LOGS_DIR" != "" ] && [ -d $LOGS_DIR ]]; then
 	log=$LOGS_DIR/fbv.log
