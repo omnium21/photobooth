@@ -38,7 +38,7 @@ exec > file 2>&1
 ## Show a default 'boot splash image'
 ##
 
-$PB_DIR/showjpg $PB_DIR/photobooth.jpg $LOGS_DIR
+$PB_DIR/showjpg $PB_DIR/photobooth.jpg $DATA_DIR
 
 
 ##
@@ -49,7 +49,7 @@ $PB_DIR/showjpg $PB_DIR/photobooth.jpg $LOGS_DIR
 ##
 
 iwatch -e moved_to \
-	-c "$PB_DIR/showjpg %f $LOGS_DIR" \
+	-c "$PB_DIR/showjpg %f $DATA_DIR" \
 	$PHOTOS_DIR 2>&1 >> $LOGS_DIR/iwatch.log &
 
 ##
