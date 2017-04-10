@@ -5,7 +5,7 @@ export LANG=c
 image=$1
 LOGS_DIR=$2
 
-if [ "$LOGS_DIR" != "" ] && [ -d $LOGS_DIR ]]; then
+if [ "$LOGS_DIR" != "" ] && [ -d $LOGS_DIR ]; then
 	log=$LOGS_DIR/fbv.log
 else
 	log=/dev/null
