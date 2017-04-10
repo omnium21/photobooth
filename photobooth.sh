@@ -50,7 +50,7 @@ if [ -e /usr/local/bin/fbv ]; then
 	## (our Image viewer)
 	##
 
-	exec > file 2>&1
+	exec > $LOGS_DIR/file 2>&1
 
 	$PB_DIR/showjpg $PB_DIR/photobooth.jpg $DATA_DIR
 else
