@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 export LANG=c
 
@@ -20,16 +20,17 @@ if [ ! -z `command -v convert` ]; then
 	if [ -f $RES_DIR/next.var ]; then
 		read bgnum < $RES_DIR/next.var
 	else
-		bgnum=1
+		bgnum=0
 	fi
-	background=$RES_DIR/background-${bgnum}.jpg
+	bg_list=(`ls $RES_DIR/background-*.jpg`)
+	background=${bg_list[${bgnum}]}
 	if [ -e $background ]; then
 		bg_cmd="\\( mpr:img -fuzz 45% -transparent \#00ff00 +write mpr:img \\) \
 			\\( ${background} mpr:img -gravity center -composite +write mpr:img \\)"
 	fi
 	bgnum=$((bgnum+1))
-	if [ ! -f $RES_DIR/background-${bgnum}.jpg ]; then
-		bgnum=1
+	if [ -z "${bg_list[${bgnum}]}" ] || [ ! -f ${bg_list[${bgnum}]} ]; then
+		bgnum=0
 	fi
 	echo ${bgnum} > $RES_DIR/next.var
 
