@@ -17,11 +17,24 @@ out=${image}
 # if ImageMagick's convert is installed, use it
 if [ ! -z `command -v convert` ]; then
 	# perhaps we want to cycle through different backgrounds?
-	background=$RES_DIR/background.jpg
-	if [ -e $background ]; then
-		bg_cmd="\\( mpr:img -fuzz 45% -transparent \#00ff00 +write mpr:img \\) \
-			\\( ${background} mpr:img -gravity center -composite +write mpr:img \\)"
+	if [ -f $RES_DIR/bg_num.var ]; then
+		read bg_num < $RES_DIR/bg_num.var
+	else
+		bg_num=1
 	fi
+	bg_list=$(identify -format "%d/%f:" $RES_DIR/backgrounds/* 2>/dev/null)
+	background=$(echo ${bg_list} | cut -d':' -f ${bg_num})
+	if [ -e "$background" ]; then
+		bg_cmd="\\( mpr:img -fuzz 45% -transparent \#00ff00 +write mpr:img \\) \
+			\\( \"${background}\" mpr:img -gravity center -composite +write mpr:img \\)"
+	fi
+	bg_num=$((bg_num+1))
+	next=$(echo ${bg_list} | cut -d':' -f ${bg_num})
+	if [ -z "${next}" ] || [ ! -f "${next}" ]; then
+		bg_num=1
+	fi
+	echo ${bg_num} > $RES_DIR/bg_num.var
+
 	logo=$RES_DIR/logo.png
 	if [ -e $logo ]; then
 		logo_cmd="\\( mpr:img $logo -gravity southeast -composite +write mpr:img \\)"
