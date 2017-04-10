@@ -7,7 +7,7 @@ DATA_DIR=$2
 LOGS_DIR=$DATA_DIR/logs
 RES_DIR=$DATA_DIR/resources
 
-if [ "$LOGS_DIR" != "" ] && [ -d $LOGS_DIR ]]; then
+if [ "$LOGS_DIR" != "" ] && [ -d $LOGS_DIR ]; then
 	log=$LOGS_DIR/fbv.log
 else
 	log=/dev/null
