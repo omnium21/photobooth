@@ -6,6 +6,8 @@ image=$1
 DATA_DIR=$2
 LOGS_DIR=$DATA_DIR/logs
 RES_DIR=$DATA_DIR/resources
+PHOTOS_DIR=$DATA_DIR/photos
+IM_DIR=$PHOTOS_DIR/im
 
 if [ "$LOGS_DIR" != "" ] && [ -d $LOGS_DIR ]; then
 	log=$LOGS_DIR/fbv.log
@@ -40,7 +42,7 @@ if [ ! -z `command -v convert` ]; then
 		logo_cmd="\\( mpr:img $logo -gravity southeast -composite +write mpr:img \\)"
 	fi
 	if [ "$bg_cmd" != "" ] || [ "$logo_cmd" != "" ]; then
-		out=${image}.out.jpg
+		out=$IM_DIR/$(basename $image)
 		cmd="convert ${image} -write mpr:img +delete \
 			$bg_cmd \
 			$logo_cmd \

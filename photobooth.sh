@@ -25,9 +25,10 @@ PB_DIR=$( cd "$( dirname "$0" )" && pwd )
 
 DATA_DIR=/home/$USER/pbdata
 PHOTOS_DIR=$DATA_DIR/photos
+IM_DIR=$PHOTOS_DIR/im
 LOGS_DIR=$DATA_DIR/logs
 
-mkdir -p $PHOTOS_DIR $LOGS_DIR
+mkdir -p $PHOTOS_DIR $IM_DIR $LOGS_DIR
 
 ##
 ## Show a default 'boot splash image'
