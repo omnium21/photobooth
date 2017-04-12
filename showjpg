@@ -60,3 +60,7 @@ else
 	# gThumg needs to be configured to enable Preferences->"Reuse the active window to open files"
 	gthumb ${out} &
 fi
+
+if [ -w $BACKUP_DIR ]; then
+	cp $out $BACKUP_DIR
+fi
